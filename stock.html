@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <script src="http://code.jquery.com/jquery-1.7.min.js" type="text/javascript"></script>
+    <script src="js/rx.js"></script>
+    <script src="js/rx.async.js"></script>
+    <script src="js/rx.binding.js"></script>
+    <script src="js/rx.time.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        
+        var WebStream = function (path, params, inputs) {
+            var self = this;
+            self.params = params || {};
+            self.subscriptions = [];
+            self.inputs = inputs || {};
+
+            var subject = new Rx.Subject();
+            var url = window.location.origin.replace('http://', 'ws://') + path;
+            if (params) {
+                url += '?' + $.param(params);
+            }
+
+            self.socket = new WebSocket(url);
+
+            socket.onclose = function () {
+                subject.onCompleted();
+                dispose(self.subscriptions);
+            };
+
+            socket.onerror = function (error) {
+                subject.onError(error);
+                dispose(self.subscriptions);
+            };
+
+            socket.onmessage = function (message) {
+                if (message.data.length > 0) {
+                    switch (message.data[0]) {
+                        case 'n':
+                            // onNext
+                            subject.onNext(JSON.parse(message.data.slice(1)));
+                            break;
+                        case 'e':
+                            // onError
+                            subject.onError(JSON.parse(message.data.slice(1)));
+                            dispose(self.subscriptions);
+                            break;
+                        case 'c':
+                            // onCompleted
+                            subject.onCompleted();
+                            dispose(self.subscriptions);
+                            break;
+                    }
+                }
+            };
+
+            self.subscriptions = subscribe(self.socket, self.inputs);
+
+            function subscribe(socket, inputs) {
+                var subscriptions = [];
+                for (var i in inputs) {
+                    var subscription = subscribeOne(inputs[i]);
+                    subscriptions.push(subscription);
+                }
+
+                return subscriptions;
+
+                function subscribeOne(input) {
+                    return input.subscribe(onNext, onError, onCompleted);
+                    function onNext(next) {
+                        socket.send('n' + i + '.' + JSON.stringify(next));
+                    }
+                    function onError(error) {
+                        socket.send('e' + i + '.' + JSON.stringify(error));
+                    }
+                    function onCompleted() {
+                        socket.send('c' + i);
+                    }
+                }
+            };
+
+            function dispose(subscriptions) {
+                for (var i in subscriptions) {
+                    subscriptions[i].dispose();
+                }
+                self.subscriptions = [];
+            };
+
+            subject.url = url;
+            subject.inputs = inputs;
+            subject.params = params;
+
+            return subject;
+        };
+
+
+        WebStream('/stock/ticker', { symbol: 'MSFT' }).subscribe(function(x) { console.log(x.price); });
+
+    });
+    </script>
+
+    <input type="text" id="msg" />
+    <input type="button" id="broadcast" value="broadcast" />
+
+    <ul id="messages"></ul>
+</body>
+</html>
