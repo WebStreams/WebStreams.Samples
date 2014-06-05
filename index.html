@@ -54,9 +54,16 @@
                 });
             });
 
+
+            var subscription;
             $('#joinForm').submit(function (event) {
                 if (event) {
                     event.preventDefault();
+                }
+
+                if (subscription) {
+                    subscription.dispose();
+                    $('#messages').empty();
                 }
 
                 // Create a new stream for sending messages.
@@ -66,7 +73,7 @@
                 var room = WebStream('/chat/join', { room: $('#room').val(), user: $('#user').val() }, inputs);
 
                 // Append new events to the chat window.
-                room.subscribe(
+                subscription = room.subscribe(
                     function (chatEvent) {
                         var time = chatEvent.time.replace('T', ' ');
                         time = time.slice(0, time.indexOf('.'));
