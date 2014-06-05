@@ -1,43 +1,15 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Stock Ticker</title>
+  <title>Stock Ticker</title>
 </head>
-    <body>
-        <button id="connect">Connect</button>
-        <button id="disconnect">Disonnect</button>
-        <div id="messages"></div>
-        <script src="http://code.jquery.com/jquery-1.7.min.js" type="text/javascript"></script>
-        <script src="Scripts/rx.js"></script>
-        <script src="Scripts/webstream.js"></script>
-        <script type="text/javascript">
-            $(function () {
-                var ticker;
-
-                function connect() {
-                    return WebStream('/stock/ticker', { symbol: 'MSFT' }).subscribe(function(tick) {
-                        $('#messages').append($('<span>').text(JSON.stringify(tick)), $('<br>'));
-                    });
-                }
-
-                $('#connect').click(function () {
-                    if (ticker) {
-                        ticker.dispose();
-                    }
-
-                    $('#messages').empty();
-
-                    ticker = connect();
-                });
-
-                $('#disconnect').click(function () {
-                    if (ticker) {
-                        ticker.dispose();
-                    }
-                });
-
-
-            });
-        </script>
-    </body>
+  <body>
+    <script src="Scripts/rx.js"></script>
+    <script src="Scripts/webstream.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        WebStream('/stock/ticker', { symbol: 'MSFT' }).subscribe(console.log);
+      });
+    </script>
+  </body>
 </html>

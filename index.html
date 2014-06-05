@@ -67,10 +67,10 @@
                 }
 
                 // Create a new stream for sending messages.
-                var inputs = { messages: new Rx.Subject() };
+                var inputStreams = { messages: new Rx.Subject() };
 
                 // Join the chat room.
-                var room = WebStream('/chat/join', { room: $('#room').val(), user: $('#user').val() }, inputs);
+                var room = WebStream('/chat/join', { room: $('#room').val(), user: $('#user').val() }, inputStreams);
 
                 // Append new events to the chat window.
                 subscription = room.subscribe(
@@ -106,7 +106,7 @@
 
                     // Send the message text to the room and clear the input box.
                     var $msgBox = $('#msg');
-                    inputs.messages.onNext($msgBox.val());
+                    inputStreams.messages.onNext($msgBox.val());
                     $msgBox.val('');
                 });
 
