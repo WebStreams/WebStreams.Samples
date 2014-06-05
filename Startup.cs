@@ -12,10 +12,10 @@
 
 namespace WebStreamSampleHost
 {
+    using Dapr.WebStream.Server;
+
     using Owin;
-
-    using WebStream;
-
+    
     using WebStreamSample;
 
     /// <summary>

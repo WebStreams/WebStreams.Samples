@@ -13,7 +13,8 @@ namespace WebStreamSample
     using System.Collections.Concurrent;
     using System.Reactive.Linq;
     using System.Reactive.Subjects;
-    using System.Web.Http;
+
+    using Dapr.WebStream.Server;
 
     /// <summary>
     /// The chat room controller.

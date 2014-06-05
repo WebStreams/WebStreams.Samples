@@ -12,7 +12,8 @@ namespace WebStreamSample
     using System;
     using System.Collections.Concurrent;
     using System.Reactive.Linq;
-    using System.Web.Http;
+
+    using Dapr.WebStream.Server;
 
     /// <summary>
     /// The stock ticker controller.
@@ -58,7 +59,12 @@ namespace WebStreamSample
                 Observable.Interval(TimeSpan.FromSeconds(0.1))
                     .Select(time => random.NextDouble())
                     .Scan((double)random.Next(1000), (prev, randomVal) => Math.Max(0, prev * (1 + (0.01 * (randomVal - 0.5)))))
-                    .Select(val => new Stock { Symbol = symbol, Price = val, Time = DateTime.UtcNow });
+                    .Select(val => new Stock { Symbol = symbol, Price = val, Time = DateTime.UtcNow }).Do(
+                        val =>
+                        {
+                            Console.WriteLine(val);
+                            Console.WriteLine(val);
+                        });
         }
 
         /// <summary>
