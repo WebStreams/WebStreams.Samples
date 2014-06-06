@@ -15,8 +15,6 @@ namespace WebStreamSampleHost
     using Dapr.WebStream.Server;
 
     using Owin;
-    
-    using WebStreamSample;
 
     /// <summary>
     /// Initialization routines.
@@ -29,8 +27,7 @@ namespace WebStreamSampleHost
         /// <param name="app">The app being configured.</param>
         public void Configuration(IAppBuilder app)
         {
-            app.UseWebStream<ChatRoomController>();
-            app.UseWebStream<StockTickerController>();
+            app.UseWebStream();
         }
     }
 }
