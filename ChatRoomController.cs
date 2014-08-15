@@ -1,20 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ChatRoomController.cs" company="Dapr Labs">
-//   Copyright 2014.
-// </copyright>
 // <summary>
 //   The chat room controller.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WebStreamSample
+namespace WebStreams.Sample
 {
     using System;
     using System.Collections.Concurrent;
     using System.Reactive.Linq;
     using System.Reactive.Subjects;
 
-    using Dapr.WebStream.Server;
+    using Dapr.WebStreams.Server;
 
     /// <summary>
     /// The chat room controller.

@@ -1,19 +1,16 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StockTickerController.cs" company="">
-//   
-// </copyright>
 // <summary>
 //   The stock ticker controller.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WebStreamSample
+namespace WebStreams.Sample
 {
     using System;
     using System.Collections.Concurrent;
     using System.Reactive.Linq;
 
-    using Dapr.WebStream.Server;
+    using Dapr.WebStreams.Server;
 
     /// <summary>
     /// The stock ticker controller.

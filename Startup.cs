@@ -1,18 +1,14 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Startup.cs" company="Dapr Labs">
-//   Copyright 2014, Dapr Labs Pty. Ltd.
-// </copyright>
 // <summary>
 //   Defines the Startup type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+[assembly: Microsoft.Owin.OwinStartup(typeof(WebStreams.Sample.Startup))]
 
-[assembly: Microsoft.Owin.OwinStartup(typeof(WebStreamSampleHost.Startup))]
-
-namespace WebStreamSampleHost
+namespace WebStreams.Sample
 {
-    using Dapr.WebStream.Server;
+    using Dapr.WebStreams.Server;
 
     using Owin;
 
@@ -27,7 +23,7 @@ namespace WebStreamSampleHost
         /// <param name="app">The app being configured.</param>
         public void Configuration(IAppBuilder app)
         {
-            app.UseWebStream();
+            app.UseWebStreams(new WebStreamsSettings { RoutePrefix = "/api/v1" });
         }
     }
 }

@@ -1,13 +1,10 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ChatEvent.cs" company="Dapr Labs">
-//   
-// </copyright>
 // <summary>
 //   Describes a chat event.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WebStreamSample
+namespace WebStreams.Sample
 {
     using System;
 

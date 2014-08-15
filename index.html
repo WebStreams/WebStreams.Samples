@@ -37,7 +37,7 @@
     <script type="text/javascript">
         $(function () {
             // Pipe all rooms into the 'rooms' dropdown.
-            WebStream('/chat/rooms').distinct().subscribe(function (room) {
+            WebStream('/api/v1/chat/rooms').distinct().subscribe(function (room) {
                 // Default to the first room.
                 if (!$('#room').val()) {
                     $('#room').val(room);
@@ -70,7 +70,7 @@
                 var inputStreams = { messages: new Rx.Subject() };
 
                 // Join the chat room.
-                var room = WebStream('/chat/join', { room: $('#room').val(), user: $('#user').val() }, inputStreams);
+                var room = WebStream('/api/v1/chat/join', { room: $('#room').val(), user: $('#user').val() }, inputStreams);
 
                 // Append new events to the chat window.
                 subscription = room.subscribe(
